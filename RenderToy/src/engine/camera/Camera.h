@@ -54,6 +54,7 @@ public:
 	int GetPosZ();
 
 	void SetPos(int setPosX, int setPosY, int setPosZ);
+	glm::mat4 GetPos();
 
 	void SetRotX(float setRotX);
 	float GetRotX();
@@ -65,6 +66,7 @@ public:
 	float GetRotZ();
 
 	void SetRot(float setRotX, float setRotY, float setRotZ);
+	glm::mat4 GetRot();
 
 	glm::mat4 GetView();
 
