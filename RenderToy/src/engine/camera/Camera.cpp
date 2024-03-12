@@ -1,8 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera(bool type)
+Camera::Camera()
 {
-	cameraType = type;
+	cameraType = false;
 	fov = 80.0f;
 	width = 0;
 	height = 0;
@@ -180,7 +180,7 @@ glm::mat4 Camera::GetCamera()
 {
 	glm::mat4 cameraPos = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, posZ));
 	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(rotX), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
-	glm::mat4 view = cameraPos * cameraRot * glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 view = cameraRot * cameraPos * glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 cameraMat;
 	if (cameraType)
 	{

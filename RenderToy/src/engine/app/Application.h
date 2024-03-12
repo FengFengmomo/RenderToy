@@ -11,10 +11,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "gl/IndexBuffer.h"
-#include "gl/VertexArray.h"
 #include "gl/Shader.h"
-#include "gl/VertexBufferLayout.h"
 #include "gl/Renderer.h"
 #include "gl/Texture.h"
 #include "camera/Camera.h"
@@ -39,12 +36,15 @@ class Application
 {
 private:
 	GLFWwindow* window;
+	Camera camera;
+	int width;
+	int height;
 
 	void Update();
 
 public:
 	Application();
 	~Application();
-	bool Init(int width, int height, const char* programName);
+	bool Init(int setWidth, int setHeight, const char* programName);
 	void Run();
 };

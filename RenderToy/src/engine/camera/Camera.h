@@ -27,7 +27,7 @@ private:
 	float rotZ;
 	
 public:
-	Camera(bool type);
+	Camera();
 	~Camera();
 
 	// True: ORTHO False: PERS

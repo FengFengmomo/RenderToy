@@ -5,7 +5,7 @@ Application::Application()
     window = nullptr;
 }
 
-bool Application::Init(int width, int height, const char* programName)
+bool Application::Init(int setWidth, int setHeight, const char* programName)
 {
     //Initialize GLFW
     if (!glfwInit())
@@ -14,7 +14,7 @@ bool Application::Init(int width, int height, const char* programName)
     }
 
     //Create a windowed mode window and its OpenGL context
-    window = glfwCreateWindow(width, height, programName, nullptr, nullptr);
+    window = glfwCreateWindow(setWidth, setHeight, programName, nullptr, nullptr);
     if (!window)
     {
         glfwTerminate();
@@ -35,6 +35,10 @@ bool Application::Init(int width, int height, const char* programName)
 
     //Get current OpenGL version
     std::cout << glGetString(GL_VERSION) << std::endl;
+
+    width = setWidth;
+    height = setHeight;
+    camera = Camera();
 
     return true;
 }
@@ -99,7 +103,6 @@ void Application::Run()
         va.AddBuffer(vb, layout);
         IndexBuffer ib(indices, (unsigned int)(sizeof(indices)/sizeof(unsigned int)));
 
-
         //Shader
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
@@ -116,8 +119,6 @@ void Application::Run()
 
         //Math
         float fov = 80.0f;
-        int height = 1280;
-        int width = 1280;
         float near = 10.0f;
         float far = -300.0f;
         int cameraX = 0;
@@ -139,7 +140,7 @@ void Application::Run()
         glm::mat4 model, mvp, rot;
         //Math
 
-        Camera camera(false);
+        
 
         //Loop until the user closes the window
         while (!glfwWindowShouldClose(window))
@@ -157,12 +158,31 @@ void Application::Run()
             rot = glm::rotate(glm::mat4(1.0f), glm::radians(radians), glm::vec3(rotX, rotY, rotZ));
             model = glm::translate(glm::mat4(1.0f), glm::vec3(modelX , modelY, modelZ));
             model *= rot;
-            mvp = camera.GetCamera() * model;
-            shader.SetUniformMat4f("u_MVP", mvp);
             //Math
 
-            renderer.Draw(va, ib, shader);
+            for (int i = 1; i <= 5; i++)
+            {
+                model = glm::translate(glm::mat4(1.0f), glm::vec3(0, i*10, 0)) * model;
+                mvp = camera.GetCamera() * model;
+                shader.SetUniformMat4f("u_MVP", mvp);
+                renderer.Draw(va, ib, shader);
+                model = glm::translate(glm::mat4(1.0f), glm::vec3(modelX, modelY, modelZ));
+                model *= rot;
+            }
 
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++) 
+                {
+                    model = glm::translate(glm::mat4(1.0f), glm::vec3(i*10, 0, j * 10)) * model;
+                    mvp = camera.GetCamera() * model;
+                    shader.SetUniformMat4f("u_MVP", mvp);
+                    renderer.Draw(va, ib, shader);
+                    model = glm::translate(glm::mat4(1.0f), glm::vec3(modelX, modelY, modelZ));
+                    model *= rot;
+                }
+            }
+            
             //imgui
             gui::NewFrame();
             {
