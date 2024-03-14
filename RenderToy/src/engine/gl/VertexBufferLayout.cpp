@@ -1,6 +1,5 @@
 #include "VertexBufferLayout.h"
 
-
 //public
 //Template Push() START
 template<>

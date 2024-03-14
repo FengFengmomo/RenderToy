@@ -1,28 +1,8 @@
-#pragma once
-
-#include <glew\glew.h>
-#include <glfw\glfw3.h>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <math.h>
-
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
-#include "gl/Shader.h"
-#include "gl/Renderer.h"
-#include "gl/Texture.h"
-#include "camera/Camera.h"
-#include "panel/GUI.h"
-#include "model/Model.h"
-
 /*
 * Class:
 *	Application
 * Description:
-*	This class is the NateCraft itself
+*	This class is the RenderToy itself
 *
 * Functions:
 *	Init(int width, int height, const char* programName)
@@ -32,13 +12,26 @@
 *	--Run the program ,basically everything this program can do will be included in this function.
 *
 */
+
+#pragma once
+
+#include <math.h>
+
+#include "core/Core.h"
+#include "shader/Shader.h"
+#include "renderer/Renderer.h"
+#include "texture/Texture.h"
+#include "panel/GUI.h"
+#include "model/Model.h"
+
+
 class Application
 {
 private:
 	GLFWwindow* window;
-	Camera camera;
 	int width;
 	int height;
+	Renderer renderer;
 
 	void Update();
 

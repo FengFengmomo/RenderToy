@@ -21,13 +21,13 @@
     <ClCompile Include="src\engine\gl\IndexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\gl\Renderer.cpp">
+    <ClCompile Include="src\engine\renderer\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\gl\Shader.cpp">
+    <ClCompile Include="src\engine\shader\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\gl\Texture.cpp">
+    <ClCompile Include="src\engine\texture\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\gl\VertexArray.cpp">
@@ -78,6 +78,9 @@
     <ClCompile Include="src\engine\model\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\core\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\app\Application.h">
@@ -86,13 +89,13 @@
     <ClInclude Include="src\engine\gl\IndexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\gl\Renderer.h">
+    <ClInclude Include="src\engine\renderer\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\gl\Shader.h">
+    <ClInclude Include="src\engine\shader\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\gl\Texture.h">
+    <ClInclude Include="src\engine\texture\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\gl\VertexArray.h">
@@ -1002,6 +1005,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\engine\model\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\engine\core\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,13 @@
+/*
+* Class:
+*	Camera
+* Description:
+*	Just a camera, I'm sure you know what this class can do
+*/
+
 #pragma once
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
+#include "core/Core.h"
 
 class Camera
 {

@@ -38,7 +38,8 @@ bool Application::Init(int setWidth, int setHeight, const char* programName)
 
     width = setWidth;
     height = setHeight;
-    camera = Camera();
+
+    renderer = Renderer();
 
     return true;
 }
@@ -115,8 +116,6 @@ void Application::Run()
         shader.SetUniform1i("u_Texture", 0);
         //Texture
 
-        Renderer renderer;
-
         //Math
         float fov = 80.0f;
         float near = 10.0f;
@@ -140,8 +139,6 @@ void Application::Run()
         glm::mat4 model, mvp, rot;
         //Math
 
-        
-
         //Loop until the user closes the window
         while (!glfwWindowShouldClose(window))
         {
@@ -149,9 +146,9 @@ void Application::Run()
             renderer.Clear();
             
             //Camera
-            camera.SetPers(fov, width, height, near, far);
-            camera.SetPos(cameraX, cameraY, cameraZ);
-            camera.SetRot(cameraRotX, cameraRotY, cameraRotZ);
+            renderer.camera.SetPers(fov, width, height, near, far);
+            renderer.camera.SetPos(cameraX, cameraY, cameraZ);
+            renderer.camera.SetRot(cameraRotX, cameraRotY, cameraRotZ);
             //Camera
 
             //Math
@@ -163,7 +160,7 @@ void Application::Run()
             for (int i = 1; i <= 5; i++)
             {
                 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, i*10, 0)) * model;
-                mvp = camera.GetCamera() * model;
+                mvp = renderer.camera.GetCamera() * model;
                 shader.SetUniformMat4f("u_MVP", mvp);
                 renderer.Draw(va, ib, shader);
                 model = glm::translate(glm::mat4(1.0f), glm::vec3(modelX, modelY, modelZ));
@@ -175,7 +172,7 @@ void Application::Run()
                 for (int j = 0; j < 10; j++) 
                 {
                     model = glm::translate(glm::mat4(1.0f), glm::vec3(i*10, 0, j * 10)) * model;
-                    mvp = camera.GetCamera() * model;
+                    mvp = renderer.camera.GetCamera() * model;
                     shader.SetUniformMat4f("u_MVP", mvp);
                     renderer.Draw(va, ib, shader);
                     model = glm::translate(glm::mat4(1.0f), glm::vec3(modelX, modelY, modelZ));

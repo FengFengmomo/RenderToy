@@ -1,12 +1,10 @@
 #pragma once
 
-#include <glew/glew.h>
-#include <glfw/glfw3.h>
+#include "core/Core.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "imgui/imgui_impl_glfw.h"
-
 
 namespace gui
 {

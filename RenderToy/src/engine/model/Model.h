@@ -1,8 +1,13 @@
+/*
+* Class:
+*	Model
+* Description:
+*	You know what this class can do, just as its name says
+*/
+
 #pragma once
 
-#include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
-
+#include "core/Core.h"
 #include "gl/IndexBuffer.h"
 #include "gl/VertexArray.h"
 #include "gl/VertexBufferLayout.h"

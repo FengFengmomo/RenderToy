@@ -1,6 +1,13 @@
+/*
+* Class:
+*	Texture
+* Description:
+*	This Texture handles anything relate to textures
+*/
+
 #pragma once
 
-#include "Renderer.h"
+#include "core/Core.h"
 
 class Texture
 {

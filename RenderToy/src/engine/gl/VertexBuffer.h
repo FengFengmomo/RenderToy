@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/Core.h"
+
 class VertexBuffer
 {
 private:

@@ -1,11 +1,17 @@
+/*
+* Class:
+*   Shader
+* Description:
+*   Yeah, it's called shader and of course it does all shader things
+*/
+
 #pragma once
 
-#include <string>
 #include <unordered_map>
 
-#include "glm/glm.hpp"
+#include "core/Core.h"
 
-//struct that store all strings of processed shaders
+//Struct that store all strings of processed shaders
 struct ShaderProgramSource
 {
     std::string VertexSource;
