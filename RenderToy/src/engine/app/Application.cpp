@@ -91,10 +91,8 @@ void Application::Run()
             22, 23, 20
         };
 
-        GLCall(glEnable(GL_BLEND));
-        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-        GLCall(glEnable(GL_DEPTH_TEST));
-        GLCall(glDepthFunc(GL_LESS));
+        renderer.Enable(GL_BLEND);
+        renderer.SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         VertexArray va;
         VertexBufferLayout layout;
