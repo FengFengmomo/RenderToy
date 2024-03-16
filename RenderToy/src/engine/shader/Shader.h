@@ -7,9 +7,8 @@
 
 #pragma once
 
-#include <unordered_map>
-
 #include "core/Core.h"
+#include <unordered_map>
 
 //Struct that store all strings of processed shaders
 struct ShaderProgramSource

@@ -25,12 +25,12 @@ private:
 	float orthoTop;
 	float orthoNear;
 	float orthoFar;
-	int posX;
-	int posY;
-	int posZ;
-	float rotX;
-	float rotY;
-	float rotZ;
+	float posX;
+	float posY;
+	float posZ;
+	float pitch;
+	float yaw;
+	float roll;
 	
 public:
 	Camera();
@@ -45,37 +45,37 @@ public:
 	bool SetRes(int setWidth, int setHeight);
 	void SetPersPlane(float setNearPlane, float setFarPlane);
 	void SetPers(float setFov, int setWidth, int setHeight, float setNearPlane, float setFarPlane);
-	glm::mat4 GetPers();
+	glm::mat4 GetPersMat();
 
 	void SetOrtho(float setLeft, float setRight, float setBottom, float setTop, float setNear, float setFar);
-	glm::mat4 GetOrtho();
+	glm::mat4 GetOrthoMat();
 	
-	void SetPosX(int setPosX);
-	int GetPosX();
+	void SetPosX(float setPosX);
+	float GetPosX();
 	
-	void SetPosY(int setPosY);
-	int GetPosY();
+	void SetPosY(float setPosY);
+	float GetPosY();
 	
-	void SetPosZ(int setPosZ);
-	int GetPosZ();
+	void SetPosZ(float setPosZ);
+	float GetPosZ();
 
-	void SetPos(int setPosX, int setPosY, int setPosZ);
+	void SetPos(float setPosX, float setPosY, float setPosZ);
 	glm::mat4 GetPos();
 
-	void SetRotX(float setRotX);
-	float GetRotX();
+	void SetPitch(float setPitch);
+	float GetPitch();
 
-	void SetRotY(float setRotX);
-	float GetRotY();
+	void SetYaw(float setYaw);
+	float GetYaw();
 
-	void SetRotZ(float setRotX);
-	float GetRotZ();
+	void SetRoll(float setRoll);
+	float GetRoll();
 
-	void SetRot(float setRotX, float setRotY, float setRotZ);
-	glm::mat4 GetRot();
+	void SetRot(float setPitch, float setYaw, float setRoll);
+	glm::mat4 GetRotMat();
 
-	glm::mat4 GetView();
+	glm::mat4 GetViewMat();
 
-	glm::mat4 GetCamera();
+	glm::mat4 GetCameraMat();
 };
 

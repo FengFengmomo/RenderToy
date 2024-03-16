@@ -2,12 +2,17 @@
 
 VertexArray::VertexArray()
 {
-    GLCall(glGenVertexArrays(1, &m_RendererID));
+    
 }
 
 VertexArray::~VertexArray()
 {
     GLCall(glDeleteVertexArrays(1, &m_RendererID));
+}
+
+void VertexArray::GenVertexArray()
+{
+    GLCall(glGenVertexArrays(1, &m_RendererID));
 }
 
 //public

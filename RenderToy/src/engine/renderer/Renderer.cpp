@@ -3,23 +3,29 @@
 Renderer::Renderer()
 {
     renderType = RenderType::TRIANGLE;
-    camera = Camera();
-
-    GLCall(glEnable(GL_DEPTH_TEST));
+    Camera camera();
+    mvp = glm::mat4(0.0f);
 }
 
 Renderer::~Renderer()
 {
+    
+}
 
+void Renderer::Init()
+{
+    GLCall(glEnable(GL_BLEND));
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+    GLCall(glEnable(GL_DEPTH_TEST));
 }
 
 //public
-void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+void Renderer::Draw(Model& model, const Shader& shader) const
 {
     shader.Bind();
-    va.Bind();
-    ib.Bind();
-    GLCall(glDrawElements((GLenum)renderType, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+    model.GetVertexArray().Bind();
+    model.GetIndexBuffer().Bind();
+    GLCall(glDrawElements((GLenum)renderType, model.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
 void Renderer::Clear() const
@@ -35,6 +41,16 @@ void Renderer::SetRenderType(RenderType setType)
 RenderType Renderer::GetRenderType()
 {
     return renderType;
+}
+
+Camera& Renderer::GetCamera()
+{
+    return camera;
+}
+
+glm::mat4 Renderer::GetMVP()
+{
+    return mvp;
 }
 
 void Renderer::Enable(GLenum funcName)

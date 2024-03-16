@@ -12,6 +12,7 @@
 #include "gl/IndexBuffer.h"
 #include "shader/Shader.h"
 #include "camera/Camera.h"
+#include "model/Model.h"
 
 enum class RenderType
 {
@@ -22,18 +23,23 @@ class Renderer
 {
 private:
     RenderType renderType;
+    Camera camera;
+    glm::mat4 mvp;
 
 public:
     Renderer();
     ~Renderer();
 
-    Camera camera;
+    void Init();
 
-    void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+    void Draw(Model& model, const Shader& shader) const;
     void Clear() const;
 
     void SetRenderType(RenderType setType);
     RenderType GetRenderType();
+    Camera& GetCamera();
+
+    glm::mat4 GetMVP();
 
     void Enable(GLenum funcName);
     void Disable(GLenum funcName);

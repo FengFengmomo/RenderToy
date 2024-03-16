@@ -23,8 +23,9 @@
 int main(void)
 {
 	Application renderToy;
-	if (renderToy.Init(1280, 1280, "RenderToy"))
+	if (renderToy.Init(960, 960, "RenderToy"))
 	{
+		std::cout << "Start running RenderToy" << std::endl;
 		renderToy.Run();
 	}
 	else

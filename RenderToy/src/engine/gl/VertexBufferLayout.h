@@ -1,8 +1,7 @@
 #pragma once
 
-#include <vector>
-
 #include "core/Core.h"
+#include <vector>
 
 struct VertexBufferElement
 {

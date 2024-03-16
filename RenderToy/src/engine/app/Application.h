@@ -15,15 +15,12 @@
 
 #pragma once
 
-#include <math.h>
-
 #include "core/Core.h"
 #include "shader/Shader.h"
 #include "renderer/Renderer.h"
 #include "texture/Texture.h"
 #include "panel/GUI.h"
 #include "model/Model.h"
-
 
 class Application
 {
@@ -34,10 +31,13 @@ private:
 	Renderer renderer;
 
 	void Update();
+	void KeyboardInput(GLFWwindow* window);
+	
 
 public:
 	Application();
 	~Application();
 	bool Init(int setWidth, int setHeight, const char* programName);
 	void Run();
+	
 };

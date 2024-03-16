@@ -5,12 +5,13 @@
 
 #pragma once
 
-#include <glew\glew.h>
-#include <glfw\glfw3.h>
+#include <glew/glew.h>
+#include <glfw/glfw3.h>
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <math.h>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

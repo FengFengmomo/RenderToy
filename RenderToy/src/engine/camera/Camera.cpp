@@ -14,12 +14,12 @@ Camera::Camera()
 	orthoTop = 0.0f;
 	orthoNear = 0.0f;
 	orthoFar = 0.0f;
-	posX = 0;
-	posY = 0;
-	posZ = 0;
-	rotX = 0.0f;
-	rotY = 0.0f;
-	rotZ = 0.0f;
+	posX = 0.0f;
+	posY = 0.0f;
+	posZ = 0.0f;
+	pitch = 0.0f;
+	yaw = 0.0f;
+	roll = 0.0f;
 }
 
 Camera::~Camera()
@@ -72,7 +72,7 @@ void Camera::SetPers(float setFov, int setWidth, int setHeight, float setNearPla
 	farPlane = setFarPlane;
 }
 
-glm::mat4 Camera::GetPers()
+glm::mat4 Camera::GetPersMat()
 {
 	glm::mat4 projPers = glm::perspective(glm::radians(fov), (float)(width/height), nearPlane, farPlane);
 	return projPers;
@@ -88,43 +88,43 @@ void Camera::SetOrtho(float setLeft, float setRight, float setBottom, float setT
 	orthoFar = setFar;
 }
 
-glm::mat4 Camera::GetOrtho()
+glm::mat4 Camera::GetOrthoMat()
 {
 	glm::mat4 projOrtho = glm::ortho(orthoLeft, orthoRight, orthoBottom, orthoTop, orthoNear, orthoFar);
 	return projOrtho;
 }
 
-void Camera::SetPosX(int setPosX)
+void Camera::SetPosX(float setPosX)
 {
 	posX = setPosX;
 }
 
-int Camera::GetPosX()
+float Camera::GetPosX()
 {
 	return posX;
 }
 
-void Camera::SetPosY(int setPosY)
+void Camera::SetPosY(float setPosY)
 {
 	posY = setPosY;
 }
 
-int Camera::GetPosY()
+float Camera::GetPosY()
 {
 	return posY;
 }
 
-void Camera::SetPosZ(int setPosZ)
+void Camera::SetPosZ(float setPosZ)
 {
 	posZ = setPosZ;
 }
 
-int Camera::GetPosZ()
+float Camera::GetPosZ()
 {
 	return posZ;
 }
 
-void Camera::SetPos(int setPosX, int setPosY, int setPosZ)
+void Camera::SetPos(float setPosX, float setPosY, float setPosZ)
 {
 	posX = setPosX;
 	posY = setPosY;
@@ -137,61 +137,61 @@ glm::mat4 Camera::GetPos()
 	return cameraPos;
 }
 
-void Camera::SetRotX(float setRotX)
+void Camera::SetPitch(float setPitch)
 {
-	rotX = setRotX;
+	pitch = setPitch;
 }
 
-float Camera::GetRotX()
+float Camera::GetPitch()
 {
-	return rotX;
+	return pitch;
 }
 
-void Camera::SetRotY(float setRotY)
+void Camera::SetYaw(float setYaw)
 {
-	rotY = setRotY;
+	yaw = setYaw;
 }
 
-float Camera::GetRotY()
+float Camera::GetYaw()
 {
-	return rotY;
+	return yaw;
 }
 
-void Camera::SetRotZ(float setRotZ)
+void Camera::SetRoll(float setRoll)
 {
-	rotZ = setRotZ;
+	roll = setRoll;
 }
 
-float Camera::GetRotZ()
+float Camera::GetRoll()
 {
-	return rotZ;
+	return roll;
 }
 
-void Camera::SetRot(float setRotX, float setRotY, float setRotZ)
+void Camera::SetRot(float setPitch, float setYaw, float setRoll)
 {
-	rotX = setRotX;
-	rotY = setRotY;
-	rotZ = setRotZ;
+	pitch = setPitch;
+	yaw = setYaw;
+	roll = setRoll;
 }
 
-glm::mat4 Camera::GetView()
+glm::mat4 Camera::GetViewMat()
 {
 	glm::mat4 cameraPos = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, posZ));
-	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(rotX), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
 	glm::mat4 view = cameraPos * cameraRot * glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	return view;
 }
 
-glm::mat4 Camera::GetRot()
+glm::mat4 Camera::GetRotMat()
 {
-	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(rotX), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
 	return cameraRot;
 }
 
-glm::mat4 Camera::GetCamera()
+glm::mat4 Camera::GetCameraMat()
 {
 	glm::mat4 cameraPos = glm::translate(glm::mat4(1.0f), glm::vec3(posX, posY, posZ));
-	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(rotX), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 cameraRot = glm::rotate(glm::mat4(1.0f), glm::radians(pitch), glm::vec3(1.0f, 0.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(yaw), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::rotate(glm::mat4(1.0f), glm::radians(roll), glm::vec3(0.0f, 0.0f, 1.0f));
 	glm::mat4 view = cameraRot * cameraPos * glm::rotate(glm::mat4(1.0f), glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::mat4 cameraMat;
 	if (cameraType)
