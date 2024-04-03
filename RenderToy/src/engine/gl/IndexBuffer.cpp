@@ -2,6 +2,7 @@
 
 IndexBuffer::IndexBuffer()
 {
+    m_RendererID = 0;
 }
 
 IndexBuffer::~IndexBuffer()
@@ -26,6 +27,11 @@ void IndexBuffer::Bind() const
 void IndexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+}
+
+unsigned int IndexBuffer::GetID() const
+{
+    return m_RendererID;
 }
 
 unsigned int IndexBuffer::GetCount() const

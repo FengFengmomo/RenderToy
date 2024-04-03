@@ -2,7 +2,7 @@
 
 VertexArray::VertexArray()
 {
-    
+    m_RendererID = 0;
 }
 
 VertexArray::~VertexArray()
@@ -39,4 +39,9 @@ void VertexArray::Bind() const
 void VertexArray::Unbind() const
 {
     GLCall(glBindVertexArray(0));
+}
+
+unsigned int VertexArray::GetID() const
+{
+    return m_RendererID;
 }

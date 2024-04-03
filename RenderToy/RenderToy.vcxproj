@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -43,6 +44,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)Dependencies\assimp;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(SolutionDir)Dependencies\assimp;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -52,12 +59,13 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(ProjectDir)src\engine;$(ProjectDir)src\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\glew;$(SolutionDir)Dependencies\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp;$(SolutionDir)Dependencies\glew;$(SolutionDir)Dependencies\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -71,26 +79,36 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies;$(ProjectDir)src\engine;$(ProjectDir)src\vendor;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\glew;$(SolutionDir)Dependencies\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\assimp;$(SolutionDir)Dependencies\glew;$(SolutionDir)Dependencies\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\gl\ColorBuffer.cpp" />
+    <ClCompile Include="src\engine\gl\RenderBuffer.cpp" />
+    <ClCompile Include="src\engine\gl\FrameBuffer.cpp" />
+    <ClCompile Include="src\engine\scene\texture\Cubemap.cpp" />
+    <ClCompile Include="src\engine\scene\light\Spot.cpp" />
+    <ClCompile Include="src\engine\scene\light\Directional.cpp" />
+    <ClCompile Include="src\engine\scene\light\Point.cpp" />
+    <ClCompile Include="src\engine\scene\light\Light.cpp" />
+    <ClCompile Include="src\engine\scene\Scene.cpp" />
+    <ClCompile Include="src\engine\scene\model\Mesh.cpp" />
     <ClCompile Include="src\engine\core\Core.cpp" />
-    <ClCompile Include="src\engine\model\Model.cpp" />
-    <ClCompile Include="src\engine\camera\Camera.cpp" />
-    <ClCompile Include="src\engine\panel\GUI.cpp" />
+    <ClCompile Include="src\engine\scene\model\Model.cpp" />
+    <ClCompile Include="src\engine\scene\camera\Camera.cpp" />
     <ClCompile Include="src\engine\app\Application.cpp" />
     <ClCompile Include="src\engine\gl\IndexBuffer.cpp" />
     <ClCompile Include="src\engine\renderer\Renderer.cpp" />
     <ClCompile Include="src\engine\shader\Shader.cpp" />
-    <ClCompile Include="src\engine\texture\Texture.cpp" />
+    <ClCompile Include="src\engine\scene\texture\Texture.cpp" />
     <ClCompile Include="src\engine\gl\VertexArray.cpp" />
     <ClCompile Include="src\engine\gl\VertexBuffer.cpp" />
     <ClCompile Include="src\engine\gl\VertexBufferLayout.cpp" />
@@ -106,18 +124,110 @@
     <ClCompile Include="src\vendor\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\engine\gl\ColorBuffer.h" />
+    <ClInclude Include="src\engine\gl\RenderBuffer.h" />
+    <ClInclude Include="src\engine\gl\FrameBuffer.h" />
+    <ClInclude Include="src\engine\scene\texture\Cubemap.h" />
+    <ClInclude Include="src\engine\scene\light\Spot.h" />
+    <ClInclude Include="src\engine\scene\light\Directional.h" />
+    <ClInclude Include="src\engine\scene\light\Point.h" />
+    <ClInclude Include="src\engine\scene\light\Light.h" />
+    <ClInclude Include="src\engine\scene\Scene.h" />
+    <ClInclude Include="src\engine\scene\model\Mesh.h" />
     <ClInclude Include="src\engine\core\Core.h" />
-    <ClInclude Include="src\engine\model\Model.h" />
-    <ClInclude Include="src\engine\camera\Camera.h" />
-    <ClInclude Include="src\engine\panel\GUI.h" />
+    <ClInclude Include="src\engine\scene\model\Model.h" />
+    <ClInclude Include="src\engine\scene\camera\Camera.h" />
     <ClInclude Include="src\engine\app\Application.h" />
     <ClInclude Include="src\engine\gl\IndexBuffer.h" />
     <ClInclude Include="src\engine\renderer\Renderer.h" />
     <ClInclude Include="src\engine\shader\Shader.h" />
-    <ClInclude Include="src\engine\texture\Texture.h" />
+    <ClInclude Include="src\engine\scene\texture\Texture.h" />
     <ClInclude Include="src\engine\gl\VertexArray.h" />
     <ClInclude Include="src\engine\gl\VertexBuffer.h" />
     <ClInclude Include="src\engine\gl\VertexBufferLayout.h" />
+    <ClInclude Include="src\vendor\assimp\aabb.h" />
+    <ClInclude Include="src\vendor\assimp\ai_assert.h" />
+    <ClInclude Include="src\vendor\assimp\anim.h" />
+    <ClInclude Include="src\vendor\assimp\AssertHandler.h" />
+    <ClInclude Include="src\vendor\assimp\Base64.hpp" />
+    <ClInclude Include="src\vendor\assimp\BaseImporter.h" />
+    <ClInclude Include="src\vendor\assimp\Bitmap.h" />
+    <ClInclude Include="src\vendor\assimp\BlobIOSystem.h" />
+    <ClInclude Include="src\vendor\assimp\ByteSwapper.h" />
+    <ClInclude Include="src\vendor\assimp\camera.h" />
+    <ClInclude Include="src\vendor\assimp\cexport.h" />
+    <ClInclude Include="src\vendor\assimp\cfileio.h" />
+    <ClInclude Include="src\vendor\assimp\cimport.h" />
+    <ClInclude Include="src\vendor\assimp\ColladaMetaData.h" />
+    <ClInclude Include="src\vendor\assimp\color4.h" />
+    <ClInclude Include="src\vendor\assimp\commonMetaData.h" />
+    <ClInclude Include="src\vendor\assimp\Compiler\poppack1.h" />
+    <ClInclude Include="src\vendor\assimp\Compiler\pstdint.h" />
+    <ClInclude Include="src\vendor\assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="src\vendor\assimp\config.h" />
+    <ClInclude Include="src\vendor\assimp\CreateAnimMesh.h" />
+    <ClInclude Include="src\vendor\assimp\DefaultIOStream.h" />
+    <ClInclude Include="src\vendor\assimp\DefaultIOSystem.h" />
+    <ClInclude Include="src\vendor\assimp\DefaultLogger.hpp" />
+    <ClInclude Include="src\vendor\assimp\defs.h" />
+    <ClInclude Include="src\vendor\assimp\Exceptional.h" />
+    <ClInclude Include="src\vendor\assimp\Exporter.hpp" />
+    <ClInclude Include="src\vendor\assimp\fast_atof.h" />
+    <ClInclude Include="src\vendor\assimp\GenericProperty.h" />
+    <ClInclude Include="src\vendor\assimp\GltfMaterial.h" />
+    <ClInclude Include="src\vendor\assimp\Hash.h" />
+    <ClInclude Include="src\vendor\assimp\Importer.hpp" />
+    <ClInclude Include="src\vendor\assimp\importerdesc.h" />
+    <ClInclude Include="src\vendor\assimp\IOStream.hpp" />
+    <ClInclude Include="src\vendor\assimp\IOStreamBuffer.h" />
+    <ClInclude Include="src\vendor\assimp\IOSystem.hpp" />
+    <ClInclude Include="src\vendor\assimp\light.h" />
+    <ClInclude Include="src\vendor\assimp\LineSplitter.h" />
+    <ClInclude Include="src\vendor\assimp\LogAux.h" />
+    <ClInclude Include="src\vendor\assimp\Logger.hpp" />
+    <ClInclude Include="src\vendor\assimp\LogStream.hpp" />
+    <ClInclude Include="src\vendor\assimp\material.h" />
+    <ClInclude Include="src\vendor\assimp\MathFunctions.h" />
+    <ClInclude Include="src\vendor\assimp\matrix3x3.h" />
+    <ClInclude Include="src\vendor\assimp\matrix4x4.h" />
+    <ClInclude Include="src\vendor\assimp\MemoryIOWrapper.h" />
+    <ClInclude Include="src\vendor\assimp\mesh.h" />
+    <ClInclude Include="src\vendor\assimp\metadata.h" />
+    <ClInclude Include="src\vendor\assimp\NullLogger.hpp" />
+    <ClInclude Include="src\vendor\assimp\ObjMaterial.h" />
+    <ClInclude Include="src\vendor\assimp\ParsingUtils.h" />
+    <ClInclude Include="src\vendor\assimp\pbrmaterial.h" />
+    <ClInclude Include="src\vendor\assimp\port\AndroidJNI\AndroidJNIIOSystem.h" />
+    <ClInclude Include="src\vendor\assimp\port\AndroidJNI\BundledAssetIOSystem.h" />
+    <ClInclude Include="src\vendor\assimp\postprocess.h" />
+    <ClInclude Include="src\vendor\assimp\Profiler.h" />
+    <ClInclude Include="src\vendor\assimp\ProgressHandler.hpp" />
+    <ClInclude Include="src\vendor\assimp\qnan.h" />
+    <ClInclude Include="src\vendor\assimp\quaternion.h" />
+    <ClInclude Include="src\vendor\assimp\RemoveComments.h" />
+    <ClInclude Include="src\vendor\assimp\scene.h" />
+    <ClInclude Include="src\vendor\assimp\SceneCombiner.h" />
+    <ClInclude Include="src\vendor\assimp\SGSpatialSort.h" />
+    <ClInclude Include="src\vendor\assimp\SkeletonMeshBuilder.h" />
+    <ClInclude Include="src\vendor\assimp\SmallVector.h" />
+    <ClInclude Include="src\vendor\assimp\SmoothingGroups.h" />
+    <ClInclude Include="src\vendor\assimp\SpatialSort.h" />
+    <ClInclude Include="src\vendor\assimp\StandardShapes.h" />
+    <ClInclude Include="src\vendor\assimp\StreamReader.h" />
+    <ClInclude Include="src\vendor\assimp\StreamWriter.h" />
+    <ClInclude Include="src\vendor\assimp\StringComparison.h" />
+    <ClInclude Include="src\vendor\assimp\StringUtils.h" />
+    <ClInclude Include="src\vendor\assimp\Subdivision.h" />
+    <ClInclude Include="src\vendor\assimp\texture.h" />
+    <ClInclude Include="src\vendor\assimp\TinyFormatter.h" />
+    <ClInclude Include="src\vendor\assimp\types.h" />
+    <ClInclude Include="src\vendor\assimp\vector2.h" />
+    <ClInclude Include="src\vendor\assimp\vector3.h" />
+    <ClInclude Include="src\vendor\assimp\version.h" />
+    <ClInclude Include="src\vendor\assimp\Vertex.h" />
+    <ClInclude Include="src\vendor\assimp\XmlParser.h" />
+    <ClInclude Include="src\vendor\assimp\XMLTools.h" />
+    <ClInclude Include="src\vendor\assimp\ZipArchiveIOSystem.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_common.hpp" />
     <ClInclude Include="src\vendor\glm\detail\compute_vector_relational.hpp" />
@@ -414,9 +524,120 @@
     <ClInclude Include="src\vendor\imgui\imstb_rectpack.h" />
     <ClInclude Include="src\vendor\imgui\imstb_textedit.h" />
     <ClInclude Include="src\vendor\imgui\imstb_truetype.h" />
+    <ClInclude Include="src\vendor\spdlog\async.h" />
+    <ClInclude Include="src\vendor\spdlog\async_logger-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\async_logger.h" />
+    <ClInclude Include="src\vendor\spdlog\cfg\argv.h" />
+    <ClInclude Include="src\vendor\spdlog\cfg\env.h" />
+    <ClInclude Include="src\vendor\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\cfg\helpers.h" />
+    <ClInclude Include="src\vendor\spdlog\common-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\common.h" />
+    <ClInclude Include="src\vendor\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\backtracer.h" />
+    <ClInclude Include="src\vendor\spdlog\details\circular_q.h" />
+    <ClInclude Include="src\vendor\spdlog\details\console_globals.h" />
+    <ClInclude Include="src\vendor\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\file_helper.h" />
+    <ClInclude Include="src\vendor\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="src\vendor\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\log_msg.h" />
+    <ClInclude Include="src\vendor\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="src\vendor\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="src\vendor\spdlog\details\null_mutex.h" />
+    <ClInclude Include="src\vendor\spdlog\details\os-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\os.h" />
+    <ClInclude Include="src\vendor\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="src\vendor\spdlog\details\registry-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\registry.h" />
+    <ClInclude Include="src\vendor\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="src\vendor\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="src\vendor\spdlog\details\tcp_client.h" />
+    <ClInclude Include="src\vendor\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\details\thread_pool.h" />
+    <ClInclude Include="src\vendor\spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="src\vendor\spdlog\details\udp_client.h" />
+    <ClInclude Include="src\vendor\spdlog\details\windows_include.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\locale.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\std.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\chrono.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\compile.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\fmt.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\ostr.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\ranges.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\std.h" />
+    <ClInclude Include="src\vendor\spdlog\fmt\xchar.h" />
+    <ClInclude Include="src\vendor\spdlog\formatter.h" />
+    <ClInclude Include="src\vendor\spdlog\fwd.h" />
+    <ClInclude Include="src\vendor\spdlog\logger-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\logger.h" />
+    <ClInclude Include="src\vendor\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\pattern_formatter.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\callback_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\kafka_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="src\vendor\spdlog\spdlog-inl.h" />
+    <ClInclude Include="src\vendor\spdlog\spdlog.h" />
+    <ClInclude Include="src\vendor\spdlog\stopwatch.h" />
+    <ClInclude Include="src\vendor\spdlog\tweakme.h" />
+    <ClInclude Include="src\vendor\spdlog\version.h" />
     <ClInclude Include="src\vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\vendor\assimp\color4.inl" />
+    <None Include="src\vendor\assimp\material.inl" />
+    <None Include="src\vendor\assimp\matrix3x3.inl" />
+    <None Include="src\vendor\assimp\matrix4x4.inl" />
+    <None Include="src\vendor\assimp\quaternion.inl" />
+    <None Include="src\vendor\assimp\SmoothingGroups.inl" />
+    <None Include="src\vendor\assimp\vector2.inl" />
+    <None Include="src\vendor\assimp\vector3.inl" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
     <None Include="src\vendor\glm\detail\func_exponential.inl" />
@@ -558,5 +779,6 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.220531.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
 </Project>

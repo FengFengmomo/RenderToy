@@ -1,24 +1,14 @@
-#pragma once
-
-#include "core/Core.h"
-
 /*
 * Class:
 *	IndexBuffer
 * Description:
-*	OpenGL Index buffer
-*
-* Functions:
-*	Bind()
-*	--Bind the index buffer
-*
-*	Unbind()
-*	--Unbind index buffer
-*
-*	GetCount()
-*	--Get the count of this index buffer
-*
+*	This class contains all functions relate to index buffer
 */
+
+#pragma once
+
+#include "core/Core.h"
+
 class IndexBuffer
 {
 private:
@@ -29,8 +19,12 @@ public:
 	IndexBuffer();
 	~IndexBuffer();
 
+	// Tell opengl to generate an index buffer object
 	void GenIndexBuffer(const unsigned int* data, unsigned int count);
 	void Bind() const;
 	void Unbind() const;
+
+	// Get IndexBuffer's members
+	unsigned int GetID() const;
 	unsigned int GetCount() const;
 };

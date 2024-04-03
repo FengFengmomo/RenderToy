@@ -2,6 +2,7 @@
 
 VertexBuffer::VertexBuffer()
 {
+    m_RendererID = 0;
 }
 
 VertexBuffer::~VertexBuffer()
@@ -25,4 +26,9 @@ void VertexBuffer::Bind() const
 void VertexBuffer::Unbind() const
 {
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+}
+
+unsigned int VertexBuffer::GetID() const
+{
+    return m_RendererID;
 }
